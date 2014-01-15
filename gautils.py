@@ -1,5 +1,5 @@
 import numpy as np
-from random import random, randint
+from random import random, randint, randrange
 
 def init_pop(n,m,r,p):
 # Initializes a population, represented by a numpy array of genomes.
@@ -33,7 +33,8 @@ def breed(fitpop, p_elite, p_survive, p_mut):
   # ACTIVATE THE RECOMBINATRON
   for i in range(n - n_elite):
     mom, dad = elite[randint(0, n_elite-1)], elite[randint(0, n_elite-1)]
-    baby = np.concatenate((mom[:int(len(mom)/2)],dad[int(len(mom)/2):]))
+    cxPoint = randrange(0,len(mom))
+    baby = np.concatenate((mom[:cxPoint],dad[cxPoint:]))
     newpop.append(baby)
 
   # ACTIVATE THE MUTAGENATRIX
