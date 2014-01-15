@@ -20,14 +20,13 @@ def breed(fitpop, p_elite, p_survive, p_mut):
 #				 p_mut		 -- The probability of mutation.
 # Returns: The new population as a 2D numpy array.
 
-	sortpop = sorted(fitpop, key=lambda x: x[1])
+	sortpop = sorted(fitpop, key=lambda x: x[1], reverse=True)
 	n = len(sortpop)
 	n_elite = int(p_elite * n)
 	n_survive = int(p_survive * n)
 
 	elite = [sortpop[i][0] for i in range(n_elite)]
 	survivors = [sortpop[i][0] for i in range(n_survive)]
-
 	newpop = elite
 
 	# ACTIVATE THE RECOMBINATRON
@@ -38,10 +37,10 @@ def breed(fitpop, p_elite, p_survive, p_mut):
 		newpop.append(baby)
 
 	# ACTIVATE THE MUTAGENATRIX
-	for i in range(len(newpop)):
-		for j in range(len(newpop[i])):
+	for i in range(n_elite,len(newpop)):
+		for j in range(n_elite, len(newpop[i])):
 			if random() < p_mut:
 					newpop[i][j] += 1
 					newpop[i][j] %= 2
-
+	
 	return newpop

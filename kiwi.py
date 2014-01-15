@@ -7,7 +7,7 @@ width = 129
 timesteps = 47
 numGens = 1000
 
-population = init_pop(100,width,3, 0.3)
+population = init_pop(100,width,3, 0.7)
 
 perf = getPerfectPattern('./ploink.wav', timesteps, width, 1.0)
 plt.matshow(perf, cmap=cm.gist_heat_r)
@@ -26,4 +26,4 @@ for gen in xrange(numGens):
 	plt.savefig(fname)
 	plt.close()
 
-	population = breed(fitpop, 0.80, 0.2, 0.002)
+	population = breed(fitpop, 0.3, 0.0, 0.02)
