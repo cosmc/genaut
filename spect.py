@@ -9,7 +9,8 @@ import scipy.interpolate
 import scipy.ndimage
 
 
-def getPerfectPattern(filename, m=10, n=40, threshold=.3):
+def getPerfectPattern(filename, t=10, m=40, threshold=.3):
+
   fp = wave.open(filename, "rb")
   data = fp.readframes(-1)
   data = fromstring(data, 'int16')
@@ -19,19 +20,20 @@ def getPerfectPattern(filename, m=10, n=40, threshold=.3):
   print "length of data", len(data)
   spock = specgram(data, Fs=fr, scale_by_freq=True, sides='default', cmap=cm.gist_heat)
   print "size of spectral data:", spock[0].shape
-  res = smoothen(spock[0],(m,n))
+  res = smoothen(spock[0],(m,t))
   #imshow(res, vmin=0.0, vmax=100.0, cmap=cm.gray)
 
-  result = np.empty([m,n])
+  result = np.empty([t,m])
   for i in range(m):
-    for j in range(n):
+    for j in range(t):
       if res[i,j] > threshold: 
-        result[i,j] = int(1)
+        result[j,i] = int(1)
       else: 
-        result[i,j] = int(0)
+        result[j,i] = int(0)
   #matshow(result)
   #show()
   fp.close()
+  return result
 
 def smoothen(a, newDims):
   if not a.dtype in [np.float64, np.float32]:
@@ -65,7 +67,3 @@ def smoothen(a, newDims):
     # need one more transpose to return to original dimensions
       newa = newa.transpose( trorder )
   return newa
-
-
-getPerfectPattern('./kiwi.wav', 10, 40)
-
