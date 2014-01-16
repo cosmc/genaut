@@ -2,6 +2,7 @@ from gautils import *
 from evalkiwi import *
 from spect import *
 import matplotlib.pyplot as plt
+import os
 
 width = 129
 timesteps = 47
@@ -11,6 +12,8 @@ population = init_pop(100,width,3, 0.7)
 
 perf = getPerfectPattern('./ploink.wav', timesteps, width, 1.0)
 plt.matshow(perf, cmap=cm.gist_heat_r)
+if not os.path.exists('plots'):
+  os.makedirs('plots')
 plt.savefig('plots/perf.png')
 plt.close
 
@@ -26,4 +29,4 @@ for gen in xrange(numGens):
 	plt.savefig(fname)
 	plt.close()
 
-	population = breed(fitpop, 0.3, 0.0, 0.02)
+	population = breed(fitpop, 0.2, 0.0, 0.05)
