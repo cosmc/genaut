@@ -4,16 +4,20 @@ from spect import *
 import matplotlib.pyplot as plt
 import os
 
+import random
+
+random.seed(42)
+
 width = 129
 timesteps = 47
-numGens = 1000
+numGens = 10000
 
-population = init_pop(100,width,3, 0.7)
+population = init_pop(10,width,3, 0.7)
 
 perf = getPerfectPattern('./ploink.wav', timesteps, width, 1.0)
 plt.matshow(perf, cmap=cm.gist_heat_r)
 if not os.path.exists('plots'):
-  os.makedirs('plots')
+	os.makedirs('plots')
 plt.savefig('plots/perf.png')
 plt.close
 
@@ -25,8 +29,12 @@ for gen in xrange(numGens):
 	best = max(fitpop, key=lambda x: x[1])
 	print gen ,":", best[1]
 	fname = "plots/" + str(gen) + ".png"
+	fname_sub = "plots/" + str(gen) + "_sub.png"
 	plt.matshow(best[2], cmap=cm.gist_heat_r)
 	plt.savefig(fname)
+	plt.close()
+	plt.matshow(best[3], cmap=cm.gist_heat_r)
+	plt.savefig(fname_sub)
 	plt.close()
 
 	population = breed(fitpop, 0.2, 0.0, 0.05)
