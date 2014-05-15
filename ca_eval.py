@@ -49,7 +49,7 @@ def evalFitness(genes,perfectPatterns,t, m, r):
 		matchScore = []
 		# best = np.empty((t,m))
 		for i in range(0,1 + step-t):
-			matchScore.append(Hamming(perfectPatterns,caMap[i:i+t])/float(t*m))
+			matchScore.append(Hamming(perfectPatterns,caMap[i:i+t]))
 			# best = caMap[i:i+t]
 		best_i = matchScore.index(max(matchScore))
 		best = caMap[best_i:best_i+t]
@@ -60,7 +60,7 @@ def evalFitness(genes,perfectPatterns,t, m, r):
 			
 def Hamming(map1,map2):
 	# Return the hamming distance (# of exact matches) between the two grid maps
-	return 1. - np.count_nonzero(map1 - map2)
+	return 1. - np.count_nonzero(map1 - map2)/float(map1.shape[0]*map1.shape[1])
 
 def Gaussian(map1,map2):
 	# Apply Gaussian filtering and compare the resulting maps
