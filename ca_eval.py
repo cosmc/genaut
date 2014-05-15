@@ -49,7 +49,7 @@ def evalFitness(genes,perfectPatterns,t, m, r):
 		matchScore = []
 		# best = np.empty((t,m))
 		for i in range(0,1 + step-t):
-			matchScore.append(1. - np.count_nonzero( Hamming(perfectPatterns,caMap[i:i+t]) )/float(t*m))
+			matchScore.append(Hamming(perfectPatterns,caMap[i:i+t]) )/float(t*m))
 			# best = caMap[i:i+t]
 		best_i = matchScore.index(max(matchScore))
 		best = caMap[best_i:best_i+t]
